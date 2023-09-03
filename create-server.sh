@@ -1,13 +1,13 @@
 #!/bin/bash
 
-NAMES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
+NAMES=$@
 INSTANCE_TYPE=""
 IMAGE_ID=ami-03265a0778a880afb
 SECURITY_GROUP_ID=sg-01753dd42fcf3cbf2
 DOMAIN_NAME=practiceonline.online
 # if mysql or mongodb instance_type should be t3.medium, for all others it is t2.micro
 
-for i in "${NAMES[@]}"
+for i in $@
 do
     if [[ $i == "mongodb" || $i == "mysql" ]]
     then
@@ -34,7 +34,3 @@ aws route53 change-resource-record-sets --hosted-zone-id Z0638654187J160VKOIY1 -
     }
     '
 done
-
-#improvement
-#check instance is already created or not
-# update route53 record
