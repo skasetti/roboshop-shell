@@ -5,6 +5,8 @@ INSTANCE_TYPE=""
 IMAGE_ID=ami-03265a0778a880afb
 SECURITY_GROUP_ID=sg-01753dd42fcf3cbf2
 DOMAIN_NAME=practiceonline.online
+HOSTED_ZONE_ID=Z0638654187J160VKOIY1
+
 # if mysql or mongodb instance_type should be t3.medium, for all others it is t2.micro
 
 for i in $@
@@ -21,7 +23,7 @@ do
     PrivateIpAddress')
      echo "created $i instance: $IP_ADDRESS"
 
-aws route53 change-resource-record-sets --hosted-zone-id Z0638654187J160VKOIY1 --change-batch ' 
+aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch ' 
 {
             "Changes": [{
             "Action": "CREATE",
@@ -34,3 +36,7 @@ aws route53 change-resource-record-sets --hosted-zone-id Z0638654187J160VKOIY1 -
     }
     '
 done
+
+#improvement
+#check instance is already created or not
+# check route53 record is already exist, if exist update, otherwise create route53 record
